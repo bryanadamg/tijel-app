@@ -1,0 +1,7 @@
+tqdm
+discord.py
+flask
+requests
+beautifulsoup4
+python-dotenv
+psutil
