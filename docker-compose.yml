@@ -14,3 +14,13 @@ services:
       context: ./bot
     env_file:
       - ./bot/.env
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: always
+    command: tunnel run
+    volumes:
+      - ./cloudflared:/etc/cloudflared
+    depends_on:
+      - flask

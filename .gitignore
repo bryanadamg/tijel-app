@@ -131,3 +131,9 @@ dmypy.json
 .pyre/
 
 .DS_Store
+
+# .gitignore
+cloudflared/*.json
+cloudflared/cert.pem
+cloudflared/config.yml
+
