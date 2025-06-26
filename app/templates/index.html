@@ -129,10 +129,12 @@
         document.getElementById('bar-disk').style.width = `${diskPercent}%`;
 
         // Minecraft
-        const mc = data.minecraft_status;
+        const mc_res = await fetch('/api/minecraft');
+        const mc = await mc_res.json();
+
         const mcEl = document.getElementById('mc-status');
-        if (mc && mc.online) {
-          mcEl.innerHTML = `<span class="status-online">🟢 ${mc.motd || 'Online'} (${mc.players}/${mc.max})</span>`;
+        if (mc.online) {
+          mcEl.innerHTML = `<span class="status-online">🟢 ${mc.motd || 'Online'} (${mc.players}/${mc.max_players})</span>`;
         } else {
           mcEl.innerHTML = `<span class="status-offline">🔴 Offline</span>`;
         }
