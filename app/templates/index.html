@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Meena Server Status</title>
+  <title>Tijel Server Status</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -57,11 +57,18 @@
       margin-top: 0.2rem;
       color: #cbd5e1;
     }
+
+    .status-online {
+      color: #22c55e;
+    }
+    .status-offline {
+      color: #ef4444;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Meena Server Status</h1>
+    <h1>Tijel Server Status</h1>
 
     <div class="metric">
       <div class="label">🌡️ Temperature</div>
@@ -85,6 +92,11 @@
       <div class="label">🗄️ Disk Usage</div>
       <div class="bar-container"><div id="bar-disk" class="bar"></div></div>
       <div class="value" id="disk-value">--</div>
+    </div>
+
+    <div class="metric">
+      <div class="label">🎮 Minecraft Server</div>
+      <div id="mc-status" class="value">Checking...</div>
     </div>
   </div>
 
@@ -116,8 +128,17 @@
         document.getElementById('disk-value').textContent = disk;
         document.getElementById('bar-disk').style.width = `${diskPercent}%`;
 
+        // Minecraft
+        const mc = data.minecraft_status;
+        const mcEl = document.getElementById('mc-status');
+        if (mc && mc.online) {
+          mcEl.innerHTML = `<span class="status-online">🟢 ${mc.motd || 'Online'} (${mc.players}/${mc.max})</span>`;
+        } else {
+          mcEl.innerHTML = `<span class="status-offline">🔴 Offline</span>`;
+        }
       } catch (err) {
         console.error('Failed to fetch status:', err);
+        document.getElementById('mc-status').textContent = 'Error checking server';
       }
     }
 
