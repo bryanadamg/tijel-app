@@ -11,10 +11,28 @@ const coinCountEl = document.getElementById("coinCount");
 
 const platform = {
     x: 0,
-    y: canvas.height - 100,
-    width: canvas.width,
-    height: 20,
+    y: canvas.height - canvas.height/2.5,
+    width: 800,
+    height: 100,
     pushAmount: 0.5,
+    offset: 0,
+};
+
+const base = {
+    x: 0,
+    y: canvas.height - canvas.height/2.5 + platform.height,
+    width: canvas.width - 300,
+    height: canvas.height/2,
+    // pushAmount: 0.5,
+    offset: 0,
+};
+
+const spawner = {
+    x: 0,
+    y: 100,
+    width: 300,
+    height: canvas.height - canvas.height/2.5 - 100,
+    // pushAmount: 0.5,
     offset: 0,
 };
 
@@ -78,8 +96,20 @@ canvas.addEventListener("click", (e) => {
 
 // Draw platform
 function drawPlatform() {
-    ctx.fillStyle = "#964B00";
-    ctx.fillRect(platform.x, platform.y + platform.offset, platform.width, platform.height);
+    ctx.fillStyle = "#75726f";
+    ctx.fillRect(platform.x + platform.offset, platform.y, platform.width, platform.height);
+}
+
+// Draw base
+function drawBase() {
+    ctx.fillStyle = "#3b3838";
+    ctx.fillRect(base.x + base.offset, base.y, base.width, base.height);
+}
+
+// Draw base
+function drawSpawner() {
+    ctx.fillStyle = "#ccc7c6";
+    ctx.fillRect(spawner.x + spawner.offset, spawner.y, spawner.width, spawner.height);
 }
 
 // Simple circle collision and response
@@ -133,6 +163,8 @@ function detectFalls() {
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlatform();
+    drawBase();
+    drawSpawner();
 
     platform.offset = Math.sin(Date.now() / 200) * 50;
 
